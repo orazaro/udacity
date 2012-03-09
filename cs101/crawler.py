@@ -47,11 +47,9 @@ start_page = "http://rambler.ru/"
 page = get_page(start_page)
 print page
 print "=" * 20
-links = get_all_links(page)
-print links
+www = get_all_links(page)
+print www
 print "=" * 20
-
-www = links;
 while(len(www)):
     url = www.pop()
     print url

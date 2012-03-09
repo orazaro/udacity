@@ -7,25 +7,25 @@ def get_page(url):
     f.close()
     return s
 
+def find_href(page):
+    h = page.find('<a')
+    if h > 0 :
+        h = page.find('href=', h + 2)
+        if h > 0:
+            return h + 4
+    return -1
+
 def get_next_url(page):
-    href = page.find('<a href=')
-    if(href == -1):
+    hrefend = find_href(page)
+    if(hrefend == -1):
         return [None,0]
-    firstpos = page.find('"', href) + 1
+    firstpos = page.find('"', hrefend) + 1
     endpos = page.find('"', firstpos)
     url = page[firstpos:endpos]
     return url, endpos
 
-def print_all_urls(page):
-    while True:
-        url, end_pos = get_next_url(page)
-        if url:
-            print url
-            page = page[end_pos:]
-        else:
-            return
-
-def get_all_urls(page):
+def get_all_links(page):
+    page.lower()
     links = []
     while True:
         url, end_pos = get_next_url(page)
@@ -36,12 +36,25 @@ def get_all_urls(page):
             break
     return links
 
+def union(p, q):
+    for e in q:
+        if e not in p:
+            p.append(e)
+    return p
 
-page = get_page("http://udacity.com/cs101x/index.html")
+start_page = "http://udacity.com/cs101x/index.html"
+start_page = "http://rambler.ru/"
+page = get_page(start_page)
 print page
 print "=" * 20
-print_all_urls(page)
+links = get_all_links(page)
+print links
 print "=" * 20
-urls = get_all_urls(page)
-print urls
+
+www = links;
+while(len(www)):
+    url = www.pop()
+    print url
+    union(www,get_all_links(url))
+
 

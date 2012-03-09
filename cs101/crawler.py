@@ -2,9 +2,12 @@
 import urllib, sys
 
 def get_page(url):
-    f = urllib.urlopen(url)
-    s = f.read()
-    f.close()
+    try:
+        f = urllib.urlopen(url)
+        s = f.read()
+        f.close()
+    except:
+        return ''
     return s
 
 def find_href(page):
@@ -40,28 +43,23 @@ def get_all_links(page):
             break
     return links
 
-def union(p, q):
-    for e in q:
-        if e not in p:
-            p.append(e)
-    return p
-
-start_page = "http://udacity.com/cs101x/index.html"
-start_page = "http://rambler.ru/"
-
-page = get_page(start_page)
-#page = sys.stdin.read()
+#seed = "http://udacity.com/cs101x/index.html"
+seed = "http://rambler.ru/"
+page = get_page(seed)
 print page
 print "=" * 20
-www = get_all_links(page)
-print www
-print "=" * 20
-while(len(www)):
-    url = www.pop()
+
+tocrawl = [seed]
+crawled = []
+while(len(tocrawl)):
+    url = tocrawl.pop()
     print url
-    links = get_all_links(url)
+    links = get_all_links(get_page(url))
+    crawled.append(url)
     print links
-    union(www, links)
+    for e in links:
+        if e not in crawled:
+            tocrawl.append(e)
     print "*" * 70
 
 

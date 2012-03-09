@@ -8,32 +8,32 @@ def get_page(url):
     return s
 
 def get_next_url(page):
-    href_pos = page.find('<a href=')
-    if(href_pos == -1):
+    href = page.find('<a href=')
+    if(href == -1):
         return [None,0]
-    first_pos = page.find('"', href_pos) + 1
-    end_pos = page.find('"', first_pos)
-    url = page[first_pos:end_pos]
-    return [url,end_pos]
+    firstpos = page.find('"', href) + 1
+    endpos = page.find('"', firstpos)
+    url = page[firstpos:endpos]
+    return url, endpos
 
 def print_all_urls(page):
     while True:
-        [url, end_pos] = get_next_url(page)
+        url, end_pos = get_next_url(page)
         if url:
             print url
+            page = page[end_pos:]
         else:
-            break
-        page = page[end_pos:]
+            return
 
 def get_all_urls(page):
     urls = []
     while True:
-        [url, end_pos] = get_next_url(page)
+        url, end_pos = get_next_url(page)
         if url:
             urls.append(url)
+            page = page[end_pos:]
         else:
             break
-        page = page[end_pos:]
     return urls
 
 

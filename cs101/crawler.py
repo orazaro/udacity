@@ -26,15 +26,15 @@ def print_all_urls(page):
             return
 
 def get_all_urls(page):
-    urls = []
+    links = []
     while True:
         url, end_pos = get_next_url(page)
         if url:
-            urls.append(url)
+            links.append(url)
             page = page[end_pos:]
         else:
             break
-    return urls
+    return links
 
 
 page = get_page("http://udacity.com/cs101x/index.html")

@@ -43,23 +43,25 @@ def get_all_links(page):
             break
     return links
 
-#seed = "http://udacity.com/cs101x/index.html"
-seed = "http://rambler.ru/"
-page = get_page(seed)
-print page
-print "=" * 20
+def crawl_web(seed):
+    tocrawl = [seed]
+    crawled = []
+    while tocrawl:
+        link = tocrawl.pop()
+        crawled.append(link)
+        print link
+        links = get_all_links(get_page(link))
+        print links
+        for e in links:
+            if e not in crawled:
+                tocrawl.append(e)
+        print "*" * 70
+    return crawled
 
-tocrawl = [seed]
-crawled = []
-while(len(tocrawl)):
-    url = tocrawl.pop()
-    print url
-    links = get_all_links(get_page(url))
-    crawled.append(url)
-    print links
-    for e in links:
-        if e not in crawled:
-            tocrawl.append(e)
-    print "*" * 70
+seed = "http://udacity.com/cs101x/index.html"
+#seed = "http://rambler.ru/"
+crawled = crawl_web(seed)
+print "crawled: ", crawled
+
 
 

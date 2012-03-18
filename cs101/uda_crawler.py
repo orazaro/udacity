@@ -2,7 +2,7 @@
 import urllib
 import sys
 
-import uda_index
+from uda_index import add_page_to_index
 
 def get_page(url):
     try:
@@ -52,16 +52,15 @@ def union(p, q):
             p.append(e)
     return p
 
-web_index = []
-
-def crawl_web(seed, max_depth):
+def crawl_web(seed, index, max_depth = 3):
     """
-    >>> index = []
-    >>> crawled = crawl_web('http://udacity.com/cs101x/index.html', 3)
+    >>> crawled,index = crawl_web('http://udacity.com/cs101x/index.html',[], 3)
     >>> print crawled[1]
     http://www.udacity.com/cs101x/flying.html
     >>> print len(crawled)
     6
+    >>> print len(index)
+    51
     """
     tocrawl = [[seed,0]]
     crawled = []
@@ -73,13 +72,13 @@ def crawl_web(seed, max_depth):
             continue
         if depth <= max_depth and link not in crawled:
             page = get_page(link)
-            add_page_to_index(web_index, link, page)
+            add_page_to_index(index, link, page)
             links = get_all_links(page)
             crawled.append(link)
             for link in links:
                 if link not in crawled:
                     tocrawl.append([link, depth+1])
-    return crawled
+    return crawled, index
 
 
 if __name__ == '__main__':
@@ -93,8 +92,11 @@ if __name__ == '__main__':
         seed = sys.argv[1]
     if len(sys.argv) > 2:
         max_depth = int(sys.argv[2])
-    crawled = crawl_web(seed, max_depth)
-    print "crawled: ", crawled
+    crawled,index = crawl_web(seed, [], max_depth)
+    #print "crawled: ", crawled
     print "links: ", len(crawled)
-    print "index: ", web_index
+    print "index:"
+#    for item in web_index:
+#        print item[0], ': ', item[1]
+    print 'keywords: ', len(index)
 

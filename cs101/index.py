@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-index = []
-
 def add_to_index(index,keyword,url):
     """
     >>> index = []
@@ -11,9 +9,9 @@ def add_to_index(index,keyword,url):
     >>> print index
     [['udacity', ['http://udacity.com', 'http://npr.org']], ['computing', ['http://acm.org']]]
     """
-    for e in index:
-        if e[0] == keyword:
-            e[1].append(url)
+    for entry in index:
+        if entry[0] == keyword:
+            entry[1].append(url)
             return
     index.append([keyword,[url]])
 

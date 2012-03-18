@@ -53,31 +53,41 @@ def union(p, q):
     return p
 
 def crawl_web(seed, max_depth):
+    """
+    >>> index = []
+    >>> crawled = crawl_web('http://udacity.com/cs101x/index.html', 3)
+    >>> print crawled[1]
+    http://www.udacity.com/cs101x/flying.html
+    """
     tocrawl = [[seed,0]]
     crawled = []
     while tocrawl:
         link, depth = tocrawl.pop()
         if link[:5] != 'http:':
             continue
+        if depth == max_depth:
+            continue
         if depth <= max_depth and link not in crawled:
             crawled.append(link)
-            print link
-            if depth == max_depth:
-                continue
             links = get_all_links(get_page(link))
-            for e in links:
-                if e not in crawled:
-                    tocrawl.append([e,depth+1])
+            for link in links:
+                if link not in crawled:
+                    tocrawl.append([link, depth+1])
     return crawled
 
-seed = "http://udacity.com/cs101x/index.html"
-max_depth = 3
-if len(sys.argv) > 1:
-    seed = sys.argv[1]
-if len(sys.argv) > 2:
-    max_depth = int(sys.argv[2])
-crawled = crawl_web(seed, max_depth)
-print "crawled: ", len(crawled)
 
-
+if __name__ == '__main__':
+    if '--test' in sys.argv[1:]:
+        import doctest
+        ret = doctest.testmod()
+        sys.exit(ret.failed)
+    seed = "http://udacity.com/cs101x/index.html"
+    max_depth = 3
+    if len(sys.argv) > 1:
+        seed = sys.argv[1]
+    if len(sys.argv) > 2:
+        max_depth = int(sys.argv[2])
+    crawled = crawl_web(seed, max_depth)
+    print "crawled: ", crawled
+    print "links: ", len(crawled)
 

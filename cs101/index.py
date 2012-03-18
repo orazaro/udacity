@@ -15,7 +15,7 @@ def add_to_index(index,keyword,url):
             return
     index.append([keyword,[url]])
 
-def lookup(index,keyword):
+def lookup(index, keyword):
     """
     >>> index = [['one',[1]],['two',[2,22]],['three',[3,33,333]]]
     >>> print lookup(index, 'two')
@@ -25,6 +25,16 @@ def lookup(index,keyword):
         if entry[0] == keyword:
             return entry[1]
     return []
+
+def add_page_to_index(index, url, content):
+    """
+    >>> index = []
+    >>> add_page_to_index(index,'fake.text',"This is a test")
+    >>> print index
+    [['This', ['fake.text']], ['is', ['fake.text']], ['a', ['fake.text']], ['test', ['fake.text']]]
+    """
+    for keyword in content.split():
+        add_to_index(index,  keyword, url)
 
 
 if __name__ == '__main__':

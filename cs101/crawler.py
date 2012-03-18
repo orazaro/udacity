@@ -2,6 +2,8 @@
 import urllib
 import sys
 
+import index
+
 def get_page(url):
     try:
         f = urllib.urlopen(url)

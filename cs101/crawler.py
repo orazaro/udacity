@@ -1,13 +1,14 @@
 #!/usr/bin/python
-import urllib, sys
+import urllib
+import sys
 
 def get_page(url):
     try:
         f = urllib.urlopen(url)
         s = f.read()
         f.close()
-    except:
-        return ''
+    except IOError, e:
+        return ""
     return s
 
 def find_href(page):
@@ -43,25 +44,38 @@ def get_all_links(page):
             break
     return links
 
-def crawl_web(seed):
-    tocrawl = [seed]
+def union(p, q):
+    for e in q:
+        if e not in p:
+            p.append(e)
+    return p
+
+def crawl_web(seed, max_depth):
+    tocrawl = [[seed,0]]
     crawled = []
     while tocrawl:
-        link = tocrawl.pop()
-        crawled.append(link)
-        print link
-        links = get_all_links(get_page(link))
-        print links
-        for e in links:
-            if e not in crawled:
-                tocrawl.append(e)
-        print "*" * 70
+        link, depth = tocrawl.pop()
+        if link[:5] != 'http:':
+            continue
+        if depth <= max_depth and link not in crawled:
+            crawled.append(link)
+            print link
+            if depth == max_depth:
+                continue
+            links = get_all_links(get_page(link))
+            for e in links:
+                if e not in crawled:
+                    tocrawl.append([e,depth+1])
     return crawled
 
 seed = "http://udacity.com/cs101x/index.html"
-#seed = "http://rambler.ru/"
-crawled = crawl_web(seed)
-print "crawled: ", crawled
+max_depth = 3
+if len(sys.argv) > 1:
+    seed = sys.argv[1]
+if len(sys.argv) > 2:
+    max_depth = int(sys.argv[2])
+crawled = crawl_web(seed, max_depth)
+print "crawled: ", len(crawled)
 
 
 

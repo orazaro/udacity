@@ -2,7 +2,7 @@
 import urllib
 import sys
 
-import index
+import uda_index
 
 def get_page(url):
     try:

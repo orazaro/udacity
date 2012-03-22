@@ -9,7 +9,7 @@ def make_string(letters):
 
 def make_big_index(size):
     index = []
-    letters = ['a','a','a','a','a','a','a','a','a']
+    letters = ['a'] * 8
     while len(index) < size:
         word = make_string(letters)
         index.append(word)

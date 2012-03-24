@@ -54,7 +54,7 @@ def union(p, q):
 
 def crawl_web(seed, index, max_depth = 3):
     """
-    >>> crawled,index = crawl_web('http://udacity.com/cs101x/index.html',[], 3)
+    >>> crawled,index = crawl_web('http://udacity.com/cs101x/index.html',{}, 3)
     >>> print crawled[1]
     http://www.udacity.com/cs101x/flying.html
     >>> print len(crawled)
@@ -92,10 +92,10 @@ if __name__ == '__main__':
         seed = sys.argv[1]
     if len(sys.argv) > 2:
         max_depth = int(sys.argv[2])
-    crawled,index = crawl_web(seed, [], max_depth)
+    crawled,index = crawl_web(seed, {}, max_depth)
     #print "crawled: ", crawled
     print "links: ", len(crawled)
-    print "index:"
+    #print "index:"
 #    for item in web_index:
 #        print item[0], ': ', item[1]
     print 'keywords: ', len(index)

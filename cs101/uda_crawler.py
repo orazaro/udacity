@@ -54,16 +54,19 @@ def union(p, q):
 
 def crawl_web(seed, index, max_depth = 3):
     """
-    >>> crawled,index = crawl_web('http://udacity.com/cs101x/index.html',{}, 3)
+    >>> crawled,index,graph = crawl_web('http://udacity.com/cs101x/index.html',{}, 3)
     >>> print crawled[1]
     http://www.udacity.com/cs101x/flying.html
     >>> print len(crawled)
     6
     >>> print len(index)
     51
+    >>> print len(graph)
+    6
     """
     tocrawl = [[seed,0]]
     crawled = []
+    graph = {}
     while tocrawl:
         link, depth = tocrawl.pop()
         if link[:5] != 'http:':
@@ -74,11 +77,12 @@ def crawl_web(seed, index, max_depth = 3):
             page = get_page(link)
             add_page_to_index(index, link, page)
             links = get_all_links(page)
+            graph[link] = links
             crawled.append(link)
             for link in links:
                 if link not in crawled:
                     tocrawl.append([link, depth+1])
-    return crawled, index
+    return crawled, index, graph
 
 
 if __name__ == '__main__':
@@ -92,7 +96,7 @@ if __name__ == '__main__':
         seed = sys.argv[1]
     if len(sys.argv) > 2:
         max_depth = int(sys.argv[2])
-    crawled,index = crawl_web(seed, {}, max_depth)
+    crawled,index,graph = crawl_web(seed, {}, max_depth)
     #print "crawled: ", crawled
     print "links: ", len(crawled)
     #print "index:"

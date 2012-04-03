@@ -11,9 +11,9 @@ def fibonacci(n):
     >>> fibonacci(50)
     12586269025
     '''
-    current, next = 0, 1
+    current, after = 0, 1
     for i in range(0,n):
-        current, next = next, current+next
+        current, after = after, current+after
     return current
 
 if __name__ == '__main__':

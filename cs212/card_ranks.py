@@ -7,7 +7,7 @@
 # are handled correctly. Do this by mapping 'T' to 10, 
 # 'J' to 11, etc...
 
-def card_ranks(cards):
+def card_ranks_my(cards):
     "Return a list of the ranks, sorted with higher first."
     ranks = [r for r,s in cards]
     for i in range(len(ranks)):
@@ -19,12 +19,21 @@ def card_ranks(cards):
     ranks.sort(reverse=True)
     return ranks
 
-def card_ranks2(cards):
+def card_ranks(hand):
     "Return a list of the ranks, sorted with higher first."
-    ranks = ['--23456789TJQKA'.index(r) for r,s in cards]
+    ranks = ['--23456789TJQKA'.index(r) for r,s in hand]
     ranks.sort(reverse=True)
     return ranks
 
-print card_ranks(['AC', '3D', '4S', 'KH']) #should output [14, 13, 4, 3]
-print card_ranks2(['AC', '3D', '4S', 'KH']) #should output [14, 13, 4, 3]
+def test():
+    "Test cases for the functions in poker program"
+    sf = "6C 7C 8C 9C TC".split() # Straight Flush
+    fk = "9D 9H 9S 9C 7D".split() # Four of a Kind
+    fh = "TD TC TH 7C 7D".split() # Full House
+    assert card_ranks(['AC', '3D', '4S', 'KH']) == [14, 13, 4, 3]
+    assert card_ranks(sf) == [10, 9, 8, 7, 6]
+    assert card_ranks(fk) == [9,9,9,9,7]
+    assert card_ranks(fh) == [10,10,10,7,7]
 
+test()
+print 'ok'

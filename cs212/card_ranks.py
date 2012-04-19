@@ -21,8 +21,7 @@ def card_ranks(cards):
 
 def card_ranks2(cards):
     "Return a list of the ranks, sorted with higher first."
-    ranks = [r for r,s in cards]
-    ranks = ['--23456789TJQKA'.index(r) for r in ranks]
+    ranks = ['--23456789TJQKA'.index(r) for r,s in cards]
     ranks.sort(reverse=True)
     return ranks
 

@@ -11,12 +11,10 @@ def allmax(iterable, key=None):
     key = key or (lambda x: x)
     for e in iterable:
         k = key(e)
-        if keymax and keymax > k:
-            pass
-        elif keymax and keymax == k:
-            result.append(e)
-        else:
+        if not result or keymax < k:
             result, keymax  = [e], k
+        elif keymax == k:
+            result.append(e)
     return result
             
 

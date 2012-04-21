@@ -42,13 +42,15 @@ def straight(ranks):
 def flush(hand):
     "Return True if all the cards have the same suit."
     # Your code here.
-    color = ''
-    for r,c in hand:
-        if color and color != c:
-            return False
-        else:
-            color = c
-    return True
+#    color = ''
+#    for r,c in hand:
+#        if color and color != c:
+#            return False
+#        else:
+#            color = c
+#    return True
+    suits = [s for r,s in hand]
+    return len(set(suits)) == 1
 
 def two_pair(ranks):
     """If there are two pair, return the two ranks as a

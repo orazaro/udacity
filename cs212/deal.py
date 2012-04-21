@@ -21,15 +21,20 @@ def shuffle(deck):
         j = random.randint(0,n-1)
         deck[i], deck[j] = deck[j], deck[i]
 
-def deal(numhands, n=5, deck=mydeck):
-    # Your code here.
-    shuffle(deck)
-    d = []
-    for i in range(numhands):
-        hand = []
-        for j in range(n):
-            hand.append(deck[i*n+j])
-        d.append(hand)
-    return d
+#def deal(numhands, n=5, deck=mydeck):
+#    # Your code here.
+#    shuffle(deck)
+#    d = []
+#    for i in range(numhands):
+#        hand = []
+#        for j in range(n):
+#            hand.append(deck[i*n+j])
+#        d.append(hand)
+#    return d
+
+# deal from Norvig
+def deal(numhands, n=5, deck=[r+s for r in '23456789TJQKA' for s in 'SHDC']):
+    random.shuffle(deck)
+    return [deck[n*i:n*(i+1)] for i in range(numhands)]
 
 print deal(3)

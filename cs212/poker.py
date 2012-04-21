@@ -7,18 +7,17 @@ def poker(hands):
 def allmax(iterable, key=None):
     "Return a list of all items equal to the max of the iterable."
     # Your code here.
-    allmax = []
-    keymax = None
+    result, keymax = [], None
+    key = key or (lambda x: x)
     for e in iterable:
         k = key(e)
         if keymax and keymax > k:
             pass
         elif keymax and keymax == k:
-            allmax.append(e)
+            result.append(e)
         else:
-            allmax = [e]
-            keymax = k
-    return allmax
+            result, keymax  = [e], k
+    return result
             
 
 def hand_rank(hand):

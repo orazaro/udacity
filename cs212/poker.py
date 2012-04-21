@@ -29,7 +29,10 @@ def card_ranks(hand):
     "Return a list of the ranks, sorted with higher first."
     ranks = ['--23456789TJQKA'.index(r) for r, s in hand]
     ranks.sort(reverse = True)
-    return ranks
+#    if ranks == [14,5,4,3,2]:
+#        ranks = [5,4,3,2,1]
+#    return ranks
+    return [5,4,3,2,1] if ranks == [14,5,4,3,2] else ranks
 
 def straight(ranks):
     "Return True if the ordered ranks form a 5-card straight."
@@ -78,6 +81,7 @@ def test():
     fk = "9D 9H 9S 9C 7D".split() # Four of a Kind
     fh = "TD TC TH 7C 7D".split() # Full House
     tp = "TD TC 7H 7C KD".split() # Two Pairs
+    al = "AC 2D 4H 3D 5S".split() # Ace-Low Straight
     fkranks = card_ranks(fk)
     tpranks = card_ranks(tp)
     assert kind(4, fkranks) == 9
@@ -92,6 +96,7 @@ def test():
     assert hand_rank(sf) == (8, 10)
     assert hand_rank(fk) == (7, 9, 7)
     assert hand_rank(fh) == (6, 10, 7)
+    assert straight(card_ranks(al)) == True
     return 'tests pass'
 
 print test()

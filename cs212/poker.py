@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import random
 
 def poker(hands):
     "Return a list of winning hands: poker([hand,...]) => [hand,...]"
@@ -88,7 +89,21 @@ def kind(n, ranks):
         if ranks.count(r) == n: return r 
     return None
 
- 
+def deal(numhands, n=5, deck=[r+s for r in '23456789TJQKA' for s in 'SHDC']):
+    random.shuffle(deck)
+    return [deck[n*i:n*(i+1)] for i in range(numhands)]
+
+hand_names = ['High Card','Pair','2 Pairs','3 Kind','Straight','Flush','Full House','4 Kind','Straight Flush']
+def hand_precentages(n = 700*1000):
+    "Sample n random hands and print a table of percentages for each type of hand."
+    counts = [0]*9
+    for i in range(n/10):
+        for hand in deal(10):
+            ranking = hand_rank(hand)[0]
+            counts[ranking] += 1
+    for i in reversed(range(9)):
+        print "%14s: %6.5f %%" % (hand_names[i], 100.*counts[i]/n)
+
 def test():
     "Test cases for the functions in poker program"
     sf = "6C 7C 8C 9C TC".split() # Straight Flush
@@ -118,4 +133,4 @@ def test():
     return 'tests pass'
 
 print test()
-
+hand_precentages(10000)

@@ -1,8 +1,25 @@
 #!/usr/bin/python
 
 def poker(hands):
-    "Return the best hand: poker([hand,...]) => hand"
-    return max(hands, key=hand_rank)
+    "Return a list of winning hands: poker([hand,...]) => [hand,...]"
+    return allmax(hands, key=hand_rank)
+
+def allmax(iterable, key=None):
+    "Return a list of all items equal to the max of the iterable."
+    # Your code here.
+    allmax = []
+    keymax = None
+    for e in iterable:
+        k = key(e)
+        if keymax and keymax > k:
+            pass
+        elif keymax and keymax == k:
+            allmax.append(e)
+        else:
+            allmax = [e]
+            keymax = k
+    return allmax
+            
 
 def hand_rank(hand):
     ranks = card_ranks(hand)
@@ -78,6 +95,8 @@ def kind(n, ranks):
 def test():
     "Test cases for the functions in poker program"
     sf = "6C 7C 8C 9C TC".split() # Straight Flush
+    sf1 = "6C 7C 8C 9C TC".split() # Straight Flush
+    sf2 = "6D 7D 8D 9D TD".split() # Straight Flush
     fk = "9D 9H 9S 9C 7D".split() # Four of a Kind
     fh = "TD TC TH 7C 7D".split() # Full House
     tp = "TD TC 7H 7C KD".split() # Two Pairs
@@ -88,15 +107,17 @@ def test():
     assert kind(3, fkranks) == None
     assert kind(2, fkranks) == None
     assert kind(1, fkranks) == 7
-    assert poker([sf, fk, fh]) == sf
-    assert poker([fk, fh]) == fk
-    assert poker([fh, fh]) == fh
-    assert poker([sf]) == sf
-    assert poker([sf] + 99*[fh]) == sf
+    assert poker([sf, fk, fh]) == [sf]
+    assert poker([fk, fh]) == [fk]
+    assert poker([fh, fh]) == [fh,fh]
+    assert poker([sf]) == [sf]
+    assert poker([sf] + 99*[fh]) == [sf]
+    assert poker([sf1, sf2, fk, fh]) == [sf1, sf2] 
     assert hand_rank(sf) == (8, 10)
     assert hand_rank(fk) == (7, 9, 7)
     assert hand_rank(fh) == (6, 10, 7)
     assert straight(card_ranks(al)) == True
+
     return 'tests pass'
 
 print test()

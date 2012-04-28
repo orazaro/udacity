@@ -29,6 +29,6 @@ def escape_html_cgi(s):
 
 print '123&2"xxxxx<q>'
 print escape_html('123&2"xxxxx<q>')
-print escape_html_norvig('123&2"xxxxx<q>')
-print escape_html_cgi('123&2"xxxxx<q>')
+print escape_html_norvig('"123&2"xxxxx<q>"')
+print escape_html_cgi('"123&2"xxxxx<q>" & = &amp;')
 

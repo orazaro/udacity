@@ -17,6 +17,12 @@ def escape_html(s):
         esc += d.get(c,c)
     return esc
 
+def escape_html_norvig(s):
+    "escape Norvig style"
+    d = {'>':'&gt;','<':'&lt;','"':'&quot;','&':'&amp;'}
+    return ''.join([d.get(c,c) for c in list(s)])
+
 print '123&2"xxxxx<q>'
 print escape_html('123&2"xxxxx<q>')
+print escape_html_norvig('123&2"xxxxx<q>')
 

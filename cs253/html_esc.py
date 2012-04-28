@@ -22,7 +22,13 @@ def escape_html_norvig(s):
     d = {'>':'&gt;','<':'&lt;','"':'&quot;','&':'&amp;'}
     return ''.join([d.get(c,c) for c in list(s)])
 
+import cgi
+def escape_html_cgi(s):
+    "escape cgi style"
+    return cgi.escape(s, quote = True)
+
 print '123&2"xxxxx<q>'
 print escape_html('123&2"xxxxx<q>')
 print escape_html_norvig('123&2"xxxxx<q>')
+print escape_html_cgi('123&2"xxxxx<q>')
 

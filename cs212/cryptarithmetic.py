@@ -16,8 +16,8 @@ def solve(formula):
     
 def fill_in(formula):
     "Generate all possible fillings-in of letters in formula with digits."
-    letters = ????? #should be a string
-    for digits in itertools.permutations('1234567890', ?????):
+    letters = ''.join(set(re.findall('[A-Z]',formula)))
+    for digits in itertools.permutations('1234567890', len(letters)):
         table = string.maketrans(letters, ''.join(digits))
         yield formula.translate(table)
     
@@ -29,3 +29,4 @@ def valid(f):
     except ArithmeticError:
         return False
 
+print solve('ODD+ODD==EVEN')

@@ -22,6 +22,7 @@ def parse(start_symbol, text, grammar):
 
     tokenizer = grammar[' '] + '(%s)'
 
+    @memo
     def parse_sequence(sequence, text):
         result = []
         for atom in sequence:
@@ -30,6 +31,7 @@ def parse(start_symbol, text, grammar):
             result.append(tree)
         return result, text
 
+    @memo
     def parse_atom(atom, text):
         if atom in grammar:  # Non-Terminal: tuple of alternatives
             for alternative in grammar[atom]:

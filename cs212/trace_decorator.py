@@ -29,11 +29,14 @@ def trace(f):
         trace.level += 1
         try:
             # your code here
+            res = f(*args)
             print '%s<-- %s == %s' % ((trace.level-1)*indent, 
                                       signature, result)
         finally:
+            print "error!"
+            return None
             # your code here
-        return # your code here
+        return res # your code here
     trace.level = 0
     return _f
 

@@ -22,7 +22,6 @@ def parse(start_symbol, text, grammar):
 
     tokenizer = grammar[' '] + '(%s)'
 
-    @memo
     def parse_sequence(sequence, text):
         result = []
         for atom in sequence:

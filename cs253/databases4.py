@@ -116,11 +116,11 @@ for l in links:
 # QUIZ - make the function query() return a list of the IDs of the links 
 # that were submitted by user 62443 sorted by submission time ascending. 
 def query():
-    res = []
-    c = db.execute('select * from where submitter_id=62443 order by submitted_time ASC')
+    r = []
+    c = db.execute('select * from links where submitter_id=62443 order by submitted_time ASC')
     for p in c.fetchall():
-        link = Link(p)
-        res.append(link.id)
-    return res
+        link = Link(*p)
+        r.append(link.id)
+    return r
 
 print query()

@@ -10,5 +10,9 @@ def make_salt():
     for _ in range(5):
         s += string.letters[random.randint(0,n)]
     return s
-    
+
+def make_salt_huffman():
+    return ''.join(random.choice(string.letters) for _ in xrange(5))
+
 print make_salt()
+print make_salt_huffman()

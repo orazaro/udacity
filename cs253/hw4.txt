@@ -1,0 +1,8 @@
+In order to be graded correctly for this homework, there are a few things to keep in mind. We'll be grading your web app by POSTing new users to your signup form and checking that we correctly get redirected and a cookie gets set. There are a few main issues you need to keep in mind in order for this to work:
+We assume your form to signup new users is at a path of '/signup' from the url you enter. That is, if you enter 'www.myblog.com/blog' in the text field above, then the form is at 'www.myblog.com/blog/signup'.
+The form method must be POST, not GET.
+The form input boxes must have the names 'username', 'password', 'verify', and 'email' in order for the grading script to correctly post to them.
+Don't forget to escape your output!
+Also, the basic methods you'll use to set and get cookies are as follows: In order to get a cookie you receive from the user, you can use 'self.request.cookies.get(name)', where name is the name of the cookie you are looking for. In order to send a cookie to a user, you simply add the header to your response. For example, 'self.response.headers.add_header('Set-Cookie', 'name=value; Path=/')', where name is the name of the cookie, and value is the value you're setting it to. The Path section of the header should be left as is for our purposes.
+If you're interested in the css styling file we use for the example page, the link is here.
+

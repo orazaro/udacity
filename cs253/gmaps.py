@@ -19,7 +19,7 @@ points = [Point(1,2),
 GMAPS_URL = "http://maps.googleapis.com/maps/api/staticmap?size=380x263&sensor=false&"
 
 def gmaps_img(points):
-    return GMAPS_URL + '&'.join(['markers=%s,%s'%tuple(x) for x in points])
+    return GMAPS_URL + '&'.join('markers=%s,%s'%tuple(x) for x in points)
 
 print gmaps_img(points)
 

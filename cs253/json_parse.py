@@ -22,9 +22,10 @@ def parse(j):
     if type(j) is dict:
         for k in j:
             if k == 'ups': 
-                print 'ups=',j[k]
+                #print 'ups=',j[k]
                 ups += int(j[k])
-            ups += parse(j[k])
+            else:
+                ups += parse(j[k])
     elif type(j) is list:
         for p in j:
             ups += parse(p)

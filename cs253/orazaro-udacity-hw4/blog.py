@@ -1,11 +1,15 @@
 import os
 import re
+import sys
+import urllib2
+from xml.dom import minidom
 from string import letters
 
 import webapp2
 import jinja2
 
 from google.appengine.ext import db
+
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
 jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir),
@@ -41,9 +45,33 @@ def check_secure_val(h):
     s = h.split('|')[0]
     return s if h==make_secure_val(s) else None
 
+# Google maps
+GMAPS_URL = "http://maps.googleapis.com/maps/api/staticmap?size=380x263&sensor=false&"
+def gmap_img(points):
+    markers = '&'.join('markers=%s,%s' % (p.lat, p.lon) for p in points)
+    return GMAPS_URL + markers
+
+# Hostip
+IP_URL = "http://api.hostip.info/?ip="
+def get_coords(ip):
+    #ip = "81.19.70.3"
+    url = IP_URL + ip
+    content = None
+    try:
+        content = urllib2.urlopen(url).read()
+    except URLError:
+        return
+
+    if content:
+        d = minidom.parseString(content)
+        coords = d.getElementsByTagName("gml:coordinates")
+        if coords and coords[0].childNodes[0].nodeValue:
+            lon, lat = coords[0].childNodes[0].nodeValue.split(',')
+            return db.GeoPt(lat, lon)
+
 class MainPage(BlogHandler):
   def get(self):
-    self.response.headers['Content-Type'] = 'text/plain'
+    #self.response.headers['Content-Type'] = 'text/plain'
     visits = 0
     cookie_visits = self.request.cookies.get('visits')
     if cookie_visits:
@@ -54,6 +82,16 @@ class MainPage(BlogHandler):
     set_visits = make_secure_val(str(visits))
     self.response.headers.add_header('Set-Cookie','visits=%s' % set_visits)
     self.write('Hello, you\'ve made %s visits!' % str(visits))
+    self.write('<br>Your ip: %s' % (self.request.remote_addr))
+    # out google map
+    points = []
+    coords = get_coords('4.2.2.2')
+    if coords: points.append(coords)
+    coords = get_coords(self.request.remote_addr)
+    if coords: points.append(coords)
+    img_url = gmap_img(points)
+    self.write('<p><img  class="map" src="'+img_url+'">')
+
 
 ##### blog stuff
 

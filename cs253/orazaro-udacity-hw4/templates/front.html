@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+  {% for p in posts %}
+    {{ p.render() | safe }}
+    <br><br>
+  {% endfor %}
+  <a href="/blog?start={{start}}">more posts</a>
+  <a href="/blog/newpost">new post</a>
+
+{% endblock %}

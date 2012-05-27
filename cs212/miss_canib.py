@@ -13,7 +13,7 @@ def csuccessors(state):
     M1, C1, B1, M2, C2, B2 = state
     # your code here
     d = {}
-    if C1>M1 or C2>M2:
+    if C1>M1>0 or C2>M2>0:
         return d
     vars=[(0,1),(1,0),(1,1),(2,0),(0,2)]
     if B1 > 0:
@@ -60,20 +60,32 @@ def mc_problem(start=(3,3,1,0,0,0), goal=None):
                 explored.add(state)
                 path2 = path + [action, state]
                 # Don't check for solution when we extend a path
-                frontier.append(path2)
+                add_to_frontier(frontier,path2)
                 frontier.sort(key=lambda path:len(path))
-                print 'front:', frontier
+                #print 'front:', frontier
     return Fail
 
 Fail = ()
 
+def add_to_frontier(frontier, path):
+    old = None
+    for i,p in enumerate(frontier):
+        if p[-1] == path[-1]:
+            old = i
+            break
+    if old is not None and len(frontier[i]) <= len(path):
+        return
+    elif old is not None:
+        del frontier[old]
+    frontier.append(path)
+
 class TestBridge: """
->>> elapsed_time(bridge_problem([1,2,5,10]))
-17
+    >>> mc_problem((3,3,1,0,0,0),(0,0,0,3,3,1))
+    [(3, 3, 1, 0, 0, 0), 'CC->', (3, 1, 0, 0, 2, 1), '<-C', (3, 2, 1, 0, 1, 0), 'CC->', (3, 0, 0, 0, 3, 1), '<-C', (3, 1, 1, 0, 2, 0), 'MM->', (1, 1, 0, 2, 2, 1), '<-MC', (2, 2, 1, 1, 1, 0), 'MM->', (0, 2, 0, 3, 1, 1), '<-C', (0, 3, 1, 3, 0, 0), 'CC->', (0, 1, 0, 3, 2, 1), '<-M', (1, 1, 1, 2, 2, 0), 'MC->', (0, 0, 0, 3, 3, 1)]
 
 """
 
-#print doctest.testmod()
-ans = mc_problem((1,1,1,0,0,0),(0,0,0,1,1,1))
-print 'ans:', ans
+print doctest.testmod()
+print mc_problem((3,3,1,0,0,0),(0,0,0,3,3,1))
+print mc_problem((6,5,1,0,0,0),(0,0,0,6,5,1))
 #print mc_problem()

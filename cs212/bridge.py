@@ -83,7 +83,9 @@ True
 >>> [elapsed_time(bridge_problem([1,1,2,3,5,8,13,21][:N])) for N in range(8)]
 [0, 1, 1, 2, 6, 12, 19, 30]
 
+>>> path_actions(bridge_problem([1,2,101,102]))
+[(2, 1, '->'), (1, 1, '<-'), (102, 101, '->'), (2, 2, '<-'), (2, 1, '->')]
+
 """
 
 print doctest.testmod()
-

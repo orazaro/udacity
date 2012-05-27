@@ -18,7 +18,6 @@
 # glass number. 
 
 
-
 def more_pour_problem(capacities, goal, start=None):
     """The first argument is a tuple of capacities (numbers) of glasses; the
     goal is a number which we must achieve in some glass.  start is a tuple
@@ -29,7 +28,38 @@ def more_pour_problem(capacities, goal, start=None):
     action is one of ('fill', i), ('empty', i), ('pour', i, j), where
     i and j are indices indicating the glass number."""
     # your code here
-    
+    import itertools
+    def successors(state):
+        d = {}
+        n = len(state)
+        for i in range(n):
+            newstate = list(state)
+            newstate[i] = capacities[i]
+            d[tuple(newstate)] = ('fill',i)
+            newstate = list(state)
+            newstate[i] = 0 
+            d[tuple(newstate)] = ('empty',i)
+        for i,j in itertools.permutations(range(n),2):
+            newstate = list(state)
+            if state[i]+state[j] <= capacities[j]:
+                newstate[i] = 0
+                newstate[j] = state[i]+state[j]
+            else:
+                newstate[i] = state[i] - (capacities[j] - state[j])
+                newstate[j] = capacities[j]
+            d[tuple(newstate)] = ('pour',i,j)
+        return d
+    def is_goal(state):
+        for g in state:
+            if g == goal:
+                return True
+        return False
+
+    if start is None:
+        start = tuple([0] * len(capacities))
+
+    return shortest_path_search(start, successors, is_goal)
+
     
 def shortest_path_search(start, successors, is_goal):
     """Find the shortest path from start state to a state

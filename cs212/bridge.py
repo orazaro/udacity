@@ -22,6 +22,20 @@ def bsuccessors(state):
     '<-' for there to here."""
     here, there, t = state
     # your code here  
+    d = {}
+    if 'light' in here:
+        for x,y in ((x,y) for x in here for y in here if x!='light' and y!='light'):
+            s = frozenset([x,y,'light'])
+            state = (here - s, there | s, t + max(x,y))
+            d[state] = (x,y,'->')
+        return d
+    else:
+        for x,y in ((x,y) for x in there for y in there if x!='light' and y!='light'):
+            s = frozenset([x,y,'light'])
+            state = (here | s, there - s, t+max(x,y))
+            d[state] = (x,y,'<-')
+        return d
+            
 
 def test():
 

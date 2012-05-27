@@ -13,7 +13,22 @@ def shortest_path_search(start, successors, is_goal):
     """Find the shortest path from start state to a state
     such that is_goal(state) is true."""
     # your code here
-
+    if is_goal(start):
+        return [start]
+    explored = set()
+    frontier = [ [start] ]
+    while frontier:
+        path = frontier.pop(0)
+        s = path[-1]
+        for (state, action) in successors(s).items():
+            if state not in explored:
+                explored.add(state)
+                path2 = path + [action, state]
+                if is_goal(state):
+                    return path2
+                else:
+                    frontier.append(path2)
+    return Fail
 
 def mc_problem1(start=(3, 3, 1, 0, 0, 0), goal=None):
     """Solve the missionaries and cannibals problem.

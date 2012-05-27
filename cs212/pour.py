@@ -70,5 +70,5 @@ class Test:
 print(doctest.testmod())
 # TestResults(failed=0, attempted=9)
 print pour_problem(4,9,6)
-
+print pour_problem(7,9,8)
 

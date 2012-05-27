@@ -46,7 +46,7 @@ def test():
 
 def mc_problem(start=(3,3,1,0,0,0), goal=None):
     "Find the fastest (least elapsed time) path to the goal in the bridge problem."
-    if not goal: goal = (0,0,0,3,3,1)
+    if not goal: goal = (0,0,0,start[0],start[1],1)
     explored = set() # set of states we have visited
     frontier = [ [start] ] # ordered list of paths we have blazed
     while frontier:

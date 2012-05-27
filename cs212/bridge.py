@@ -21,7 +21,7 @@ def bsuccessors(state):
     as a tuple (person1, person2, arrow), where arrow is '->' for here to there and 
     '<-' for there to here."""
     here, there, t = state
-    # your code here  
+    # your code here
     d = {}
     if 'light' in here:
         for x,y in ((x,y) for x in here for y in here if x!='light' and y!='light'):

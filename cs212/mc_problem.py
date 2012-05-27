@@ -9,9 +9,9 @@
 def mc_problem2(start=(3, 3, 1, 0, 0, 0), goal=None):
     # your code here if necessary
     if goal is None:
-        goal = (0,0,0) + start[:3]
-    def is_goal(state):
-        return state == goal
+        def is_goal(state): return state[:3] == (0,0,0) 
+    else:
+        def is_goal(state): return state == goal
     return shortest_path_search(start,csuccessors,is_goal) # <== insert arguments here
 
 def shortest_path_search(start, successors, is_goal):

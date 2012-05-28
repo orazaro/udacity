@@ -31,9 +31,8 @@ import doctest
 def subway(**lines):
     """Define a subway map. Input is subway(linename='station1 station2...'...).
     Convert that and return a dict of the form: {station:{neighbor:line,...},...}
-    >>> m = {'q':'b c d','w':'a c'}
-    >>> print [x+'->'+'+'.join(y) for x,y in subway(**m).items()]
-    ['a->c', 'c->b+d+a', 'b->c', 'd->c']
+    >>> print [x+'->'+s+'.'+a for x,y in subway(**{'q':'b c d','w':'a c'}).items() for s,a in y]
+    ['a->c.w', 'c->b.q', 'c->d.q', 'c->a.w', 'b->c.q', 'd->c.q']
     """
     ## your code here
     from collections import defaultdict
@@ -44,7 +43,7 @@ def subway(**lines):
             if i > 0:
                 d[s].append([stations[i-1],name])
             if i < len(stations)-1:
-                d[s].append([namestations[i+1],name])
+                d[s].append([stations[i+1],name])
     return d
 
 boston = subway(
@@ -54,15 +53,37 @@ boston = subway(
     red='alewife davis porter harvard central mit charles park downtown south umass mattapan')
 
 def ride(here, there, system=boston):
-    "Return a path on the subway system from here to there."
+    """Return a path on the subway system from here to there.
+    >>> print ride('mit', 'government')
+    ['mit', 'red', 'charles', 'red', 'park', 'green', 'government']
+    """
     ## your code here
     def successors(state):
-
+        if state not in system:
+            return {}
+        d = {}
+        for s in system[state]:
+            d[s[0]] = s[1]
+        return d
+    def is_goal(state):
+        return state == there
+    start = here
+    return shortest_path_search(start, successors, is_goal)
 
 def longest_ride(system):
     """"Return the longest possible 'shortest path' 
     ride between any two stops in the system."""
     ## your code here
+    import itertools
+    states = system.keys()
+    max_len = 0
+    max_path = []
+    for x,y in itertools.permutations(states,2):
+        path = ride(x,y,system)
+        if len(path) > max_len:
+            max_len = len(path)
+            max_path = path
+    return max_path
 
 def shortest_path_search(start, successors, is_goal):
     """Find the shortest path from start state to a state
@@ -110,7 +131,11 @@ def test_ride():
     assert len(path_states(longest_ride(boston))) == 16
     return 'test_ride passes'
 
-#print [x+'->'+'+'.join(y) for x,y in subway(**{'q':'b c d','w':'a c'}).items()]
+#print [x+'->'+s+'.'+a for x,y in subway(**{'q':'b c d','w':'a c'}).items() for s,a in y]
+#print ride('mit', 'government')
 doctest.testmod()
+
+longest_ride(boston)
+
 print test_ride()
 

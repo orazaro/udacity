@@ -26,10 +26,26 @@
 # longest_ride() will be explicitly tested. If your code passes the 
 # assert statements in test_ride(), it should be marked correct.
 
+import doctest
+
 def subway(**lines):
     """Define a subway map. Input is subway(linename='station1 station2...'...).
-    Convert that and return a dict of the form: {station:{neighbor:line,...},...}"""
+    Convert that and return a dict of the form: {station:{neighbor:line,...},...}
+    >>> m = {'q':'b c d','w':'a c'}
+    >>> print [x+'->'+'+'.join(y) for x,y in subway(**m).items()]
+    ['a->c', 'c->b+d+a', 'b->c', 'd->c']
+    """
     ## your code here
+    from collections import defaultdict
+    d = defaultdict(list)
+    for name,line in lines.items():
+        stations = line.split()
+        for i,s in enumerate(stations):
+            if i > 0:
+                d[s].append([stations[i-1],name])
+            if i < len(stations)-1:
+                d[s].append([namestations[i+1],name])
+    return d
 
 boston = subway(
     blue='bowdoin government state aquarium maverick airport suffolk revere wonderland',
@@ -40,6 +56,8 @@ boston = subway(
 def ride(here, there, system=boston):
     "Return a path on the subway system from here to there."
     ## your code here
+    def successors(state):
+
 
 def longest_ride(system):
     """"Return the longest possible 'shortest path' 
@@ -92,5 +110,7 @@ def test_ride():
     assert len(path_states(longest_ride(boston))) == 16
     return 'test_ride passes'
 
+#print [x+'->'+'+'.join(y) for x,y in subway(**{'q':'b c d','w':'a c'}).items()]
+doctest.testmod()
 print test_ride()
 

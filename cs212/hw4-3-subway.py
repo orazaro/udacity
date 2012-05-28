@@ -61,10 +61,7 @@ def ride(here, there, system=boston):
     def successors(state):
         if state not in system:
             return {}
-        d = {}
-        for s in system[state]:
-            d[s[0]] = s[1]
-        return d
+        return dict( system[state] )
     def is_goal(state):
         return state == there
     start = here
@@ -76,8 +73,7 @@ def longest_ride(system):
     ## your code here
     import itertools
     states = system.keys()
-    max_len = 0
-    max_path = []
+    max_len, max_path = 0, []
     for x,y in itertools.permutations(states,2):
         path = ride(x,y,system)
         if len(path) > max_len:

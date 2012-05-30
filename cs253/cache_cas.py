@@ -23,20 +23,17 @@ def flush():
 #we can use here is hash(repr(val))
 def gets(key):
     ###Your gets code here.
-    global h
     value = CACHE.get(key)
-    h = hash(repr(value)
-    return (value,h)
+    return (value,hash(repr(value)))
 
 # set key = value and return True if cas_unique matches the hash of the value
 # already in the cache. if cas_unique does not match the hash of the value in
 # the cache, don't set anything and return False.
 def cas(key, value, cas_unique):
     ###Your cas code here.
-    global h
-    if h == hash(repr(value)):
-        CACHE[key] = value
-        return True
+    (v,h) = gets(key)
+    if h == cas_unique:
+        return set(key, value)
     return False
 
 print set('x', 1)
@@ -53,7 +50,8 @@ print get('x')
 #>>> None
 #
 set('x', 2)
-print gets('x')
+(v,HASH) = gets('x')
+print (v,HASH)
 #>>> 2, HASH
 #
 print cas('x', 3, 0)

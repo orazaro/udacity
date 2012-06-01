@@ -65,7 +65,7 @@ def play_pig(A, B, dierolls=dierolls()):
 
 def test():
     A, B = hold_at(50), clueless
-    rolls = iter([]) # <-- Your rolls here
+    rolls = iter([6]*9) # <-- Your rolls here
     assert play_pig(A, B, rolls) == A
     return 'test passes'
 

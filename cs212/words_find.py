@@ -38,4 +38,15 @@ def extend_prefix(pre, letters, results):
 def find_words(letters):
     return extend_prefix('', letters, set())
 
+
+def find_words_alt(letters, pre='', results=None):
+    if results is None: results = set()
+    if pre in WORDS: results.add(pre) 
+    if pre in PREFIXES:
+        for L in letters:
+            find_words_alt(letters.replace(L,'',1), pre+L, results)
+    return results
+
+
 print filter(lambda w: len(w)>4, find_words('ABILITYGHFFABEL'))
+print filter(lambda w: len(w)>4, find_words_alt('ABILITYGHFFABEL'))

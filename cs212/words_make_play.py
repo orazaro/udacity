@@ -222,6 +222,7 @@ def make_play(play, board):
     "Put the word down on the board."
     (score, (i, j), (di, dj), word) = play
     ###Your code here.
+    for L in word:
+        board[i][j] = L
+        (i,j) = (i+di,j+dj)
     return board
-
-

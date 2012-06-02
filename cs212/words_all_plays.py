@@ -154,6 +154,12 @@ def all_plays(hand, board):
     hplays = horizontal_plays(hand, board)            # set of ((i, j), word)
     vplays = horizontal_plays(hand, transpose(board)) # set of ((j, i), word)
     ###Your code here.
+    result = set()
+    for p,word in hplays:
+        result.add((p, ACROSS, word))
+    for (j,i),word in vplays:
+        result.add(((i,j), DOWN, word))
+    return result
 
 
 

@@ -72,7 +72,7 @@ assert (word_plays('ADEQUAT', set('IRE')) ==
 def longest_words(hand, board_letters):
     "Return all word plays, longest first."
     ###Your code here.
-    return sorted(word_plays(hand, board_letters), key=lambda w: len(w),reverse=True)    
+    return sorted(word_plays(hand, board_letters), key=len, reverse=True)    
 
 print longest_words('ADEQUAT', set('IRE'))
 

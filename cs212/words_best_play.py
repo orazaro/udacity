@@ -231,5 +231,7 @@ NOPLAY = None
 def best_play(hand, board):
     "Return the highest-scoring play.  Or None."
     ###Your code here.
+    plays = all_plays(hand,board)
+    return max(plays,key=lambda play: play[0]) if plays else None
 
 

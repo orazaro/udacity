@@ -222,7 +222,6 @@ def make_play(play, board):
     "Put the word down on the board."
     (score, (i, j), (di, dj), word) = play
     ###Your code here.
-    for L in word:
-        board[i][j] = L
-        (i,j) = (i+di,j+dj)
+    for (n,L) in enumerate(word):
+        board[i+n*di][j+n*dj] = L
     return board

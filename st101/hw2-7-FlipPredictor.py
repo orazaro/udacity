@@ -18,10 +18,7 @@ class FlipPredictor(object):
     def pheads(self):
         #Write a function that returns 
         #the probability of the next flip being heads 
-        phead = 0
-        for ph,prob in zip(self.coins,self.probs):
-            phead += ph*prob
-        return phead
+        return sum(ph*prob for ph,prob in zip(self.coins,self.probs))
 
     def update(self,result):
         #Write a function the updates

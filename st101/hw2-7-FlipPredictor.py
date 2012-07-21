@@ -18,12 +18,25 @@ class FlipPredictor(object):
     def pheads(self):
         #Write a function that returns 
         #the probability of the next flip being heads 
-        return 0
+        phead = 0
+        for ph,prob in zip(self.coins,self.probs):
+            phead += ph*prob
+        return phead
 
     def update(self,result):
         #Write a function the updates
         #the probabilities of flipping each coin
-        pass
+        n = len(self.coins)
+        phead = self.pheads()
+        if result == 'H':
+            for i in range(n):
+                self.probs[i] = self.coins[i]*self.probs[i]/phead
+        elif result == 'T':
+            for i in range(n):
+                self.probs[i] = (1-self.coins[i])*self.probs[i]/(1-phead)
+        else:
+            raise ValueError("bad flip %s" % result)
+            
 
 #The code below this line tests your implementation. 
 #You need not change it

@@ -5,10 +5,7 @@ def mean(data):
 def variance(data):
     #Insert your code here
     mu = mean(data)
-    s = 0
-    for e in data:
-        s += (e-mu)**2
-    return s / len(data)
+    return mean([(e-mu)**2 for e in data])
 
 def variance_fast(data):
     mx, mx2, n = 0,0, len(data)
